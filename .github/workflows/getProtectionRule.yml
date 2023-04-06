@@ -1,0 +1,38 @@
+name: Get branch protection rule
+
+on:
+  push:
+    branches:
+      - testLock
+
+jobs:
+  get-branch-protection:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get repository and branch information
+        run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Owner: ${{ github.repository_owner }}"
+
+
+      - name: Get branch protection
+        id: get_protection
+        run: |
+          curl \
+            -H "Accept: application/vnd.github.luke-cage-preview+json" \
+            -H "Authorization: Bearer ${{ secrets.CI_GITHUB_READ_ONLY_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/branches/master/protection"
+
+      - name: Check for errors
+        if: ${{ failure() }}
+        run: echo "${{ steps.get_protection_rule.outputs.error_message }}"
+
+      - name: Print branch protection
+        run: echo "${{ steps.get_protection.outputs.data }}"
