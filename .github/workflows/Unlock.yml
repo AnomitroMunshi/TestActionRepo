@@ -38,7 +38,7 @@ jobs:
               "restrictions": null,
               "required_linear_history": false,
               "lock_branch": false,
-              "allow_fork_syncing":true;
+              "allow_fork_syncing":true,
               "allow_force_pushes": false,
               "allow_deletions": false
             }'
