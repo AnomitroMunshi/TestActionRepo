@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  get-branch-protection:
+  unlock-branch-protection:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -20,56 +20,29 @@ jobs:
           echo "Owner: ${{ github.repository_owner }}"
 
 
-      - name: Get branch protection
-        id: get_protection
+      - name: Unlock branch
+        id: unlock
         run: |
           curl -i -X PUT \
             -H "Accept: application/vnd.github.luke-cage-preview+json" \
             -H "Authorization: Bearer ${{ secrets.CI_GITHUB_READ_ONLY_TOKEN }}" \
             "https://api.github.com/repos/${{ github.repository }}/branches/master/protection"
             -d '{
-                  "url": "https://api.github.com/repos/${{ github.repository }}/branches/master/protection",
-                  "required_status_checks": {
-                    "url": "https://api.github.com/repos/${{ github.repository }}/branches/master/protection/required_status_checks",
-                    "strict": true,
-                    "contexts": [],
-                    "contexts_url": "https://api.github.com/repos/AnomitroMunshi/TestActionRepo/branches/master/protection/required_status_checks/contexts",
-                    "checks": []
-                  },
-                  "required_pull_request_reviews": {
-                    "url": "https://api.github.com/repos/${{ github.repository }}/branches/master/protection/required_pull_request_reviews",
-                    "dismiss_stale_reviews": false,
-                    "require_code_owner_reviews": false,
-                    "require_last_push_approval": false,
-                    "required_approving_review_count": 1
-                  },
-                  "required_signatures": {
-                    "url": "https://api.github.com/repos/AnomitroMunshi/TestActionRepo/branches/master/protection/required_signatures",
-                    "enabled": false
-                  },
-                  "enforce_admins": {
-                    "url": "https://api.github.com/repos/AnomitroMunshi/TestActionRepo/branches/master/protection/enforce_admins",
-                    "enabled": false
-                  },
-                  "required_linear_history": {
-                    "enabled": false
-                  },
-                  "allow_force_pushes": {
-                    "enabled": false
-                  },
-                  "allow_deletions": {
-                    "enabled": false
-                  },
-                  "block_creations": {
-                    "enabled": false
-                  },
-                  "required_conversation_resolution": {
-                    "enabled": true
-                  },
-                  "lock_branch": {
-                    "enabled": false
-                  },
-                  "allow_fork_syncing": {
-                    "enabled": true
-                  }
-                }'
+              "required_status_checks": null,
+              "enforce_admins": null,
+              "required_pull_request_reviews": {
+                "dismiss_stale_reviews": false,
+                "require_code_owner_reviews": false,
+                "required_approving_review_count": 1
+              },
+              "restrictions": null,
+              "required_linear_history": false,
+              "lock_branch": false,
+              "allow_fork_syncing":true;
+              "allow_force_pushes": false,
+              "allow_deletions": false
+            }'
+
+
+
+
