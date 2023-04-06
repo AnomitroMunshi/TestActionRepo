@@ -23,7 +23,7 @@ jobs:
       - name: Unlock branch
         id: unlock
         run: |
-          curl -i -X PATCH \
+          curl -i -X PUT \
             -H "Accept: application/vnd.github.luke-cage-preview+json" \
             -H "Authorization: Bearer ${{ secrets.CI_GITHUB_READ_ONLY_TOKEN }}" \
             https://api.github.com/repos/${{ github.repository }}/branches/master/protection \
