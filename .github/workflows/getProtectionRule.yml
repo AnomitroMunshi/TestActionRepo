@@ -3,7 +3,7 @@ name: Get branch protection rule
 on:
   push:
     branches:
-      - testLock
+      - master
 
 jobs:
   get-branch-protection:
