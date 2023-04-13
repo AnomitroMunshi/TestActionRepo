@@ -28,7 +28,7 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.CI_GITHUB_READ_ONLY_TOKEN }}" \
             https://api.github.com/repos/${{ github.repository }}/branches/master/protection \
             -d '{
-              "required_status_checks": true,
+              "required_status_checks": null,
               "enforce_admins": null,
               "required_pull_request_reviews": {
                 "dismiss_stale_reviews": false,
